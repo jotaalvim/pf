@@ -24,9 +24,15 @@ Métodos de ordenação de listas:
 		troca os elementos 2 a dois recursivamente
 		se fosse um jogo de cartas seria o peixinho, uma merda
 
+Lazy evaluation
+    O haskell utiliza uma estratégia de redução, 
+    que aplica a função antes de fazer os calculos dos seus argumentos, 
+    é o que permite ao haskell lidar com listas infinitas
+        snd (div 5 0, 1) = 1
+        zip "abvdefg" [1..] -> ele não calcula a lista infinta completa, so calcula até onde lhe dá jeito, é um preguiçoso 
 
 para executar programas seguidos, comandos, IOs, usa-se o: do 
-
+FIXME
 Classes e instâncias 
 
 
@@ -92,7 +98,6 @@ Funções anónimas:
 
 Funções de ordem superior:
 	Funções que aceitam outras como argumento
-	listas em compreensão
 
 Cronómetro
     :set +s
