@@ -14,7 +14,8 @@ Métodos de ordenação de listas:
 		Divide a lista em 2 recursivamente e no fim junta tudo ordenadamente
 
 	Quick Sort 
-		pega num número, e poe para o seu lado esquerdo os números menor que ele e para a direita os numeros maiores que ele, faz isso recursivamente até estár ordenado
+		pega num número, e poe para o seu lado esquerdo os números menor que ele e 
+                para a direita os numeros maiores que ele, faz isso recursivamente até estár ordenado
 		
 		é das mais potentes mas funciona "muito mal" se a lista tiver ordenada de forma
 		decrescente ou se já tiver ordenada
@@ -29,22 +30,35 @@ para executar programas seguidos, comandos, IOs, usa-se o: do
 Classes e instâncias 
 
 
-Árvores binárias
-binaias
-rose
-Nestas árvores a informação está nos nodos (as extermidades da árvore têm apenas
-uma marca – Empty). É também habitual definirem-se árvores em que a informação
-está apenas nas extermidades (leaf trees):
-full trees onde a informação está não só nos nodos, como também nas
-folhas
+Árvores
+    Árvores de procura:
+        São árvores que partindo de um nodo, qualquer que ele seja, o nodo do ramo da esquerda é sempre menor que este 
+        e o da direira é sempre maior.
+    Rose Trees:
+	São árvores irregulares, árvores que são n-áveis
+
+        data RTree a = R a [RTree a]
+    
+    Leaf trees: 
+        Árvores binárias em que a informação está apenas nas folhas da árvore.
+        Os nós intermédios não têm informação.
+
+        data LTree a = Tip a | Fork (LTree a) (LTree a)    
+    
+    Full trees:
+        Árvores binárias que têm informação nos nós intermédios e nas folhas.
+        A informação guardada nos nós e nas folhas pode ser de tipo diferente.
+        
+        data FTree a b = Leaf b | No a (FTree a b) (FTree a b)
+
+    Existem algoritmos para equilibrar árvores binárias de procura, caso estejam desiquilibradas.
 
 
 Assinatura de uma função:
-
 função :: Ord a =>
 função :: Eq a => ...
-	utiliza-se (Ord a) quando se quer comparar com < e > valores a 
-	utiliza-se (Eq a)  quando se quer compara com == valores a
+	utiliza-se (Ord a) quando se quer comparar com < e > ,os valores a tem relação de ordem.
+	utiliza-se (Eq a)  quando se quer compara com == , os valores a tem relação de igualdade.
 
 
 
@@ -81,10 +95,11 @@ Funções de ordem superior:
 	listas em compreensão
 
 Cronómetro
-:i FIXME
-:set +s
+    :set +s
 	inicia o cronómetro, conta o tempo de cada função executada
 
+
+:i FIXME
 
 Construção de listas:
 
@@ -100,24 +115,22 @@ Construção de listas:
 	[50,45..0] = [50,45,40,35,30,25,20,15,10,5,0]
 
 Listas em compreensão
-
-{x | x in N && x < 10} = {1,2,3,4,5,6,7,8,9}
-lista em compreensao      lista em extensao 
-
-exemplo 
+    {x | x in N && x < 10} = {1,2,3,4,5,6,7,8,9}
+    lista em compreensao      lista em extensao 
+    exemplo 
 	[x | x <- [1..10], mod x 2 == 0 ] == [2,4,6,8,10]
 
 
-funções infixas (operadores "entre" os operandos) +,*,/,!!
-	4 + 5,[1,2,3] !! 2
-podem ser usadas em modo prefixo, englobando-as em ()
+Funções Infixas (operadores "entre" os operandos) +,*,/,!!
+    4 + 5,[1,2,3] !! 2
+    podem ser usadas em Modo Prefixo, englobando-as em ()
 	(+) 4 5, (!!) [1,2,3] 2
 
 
-funções prefixas(operador aparece "antes dos operandos") div, mod, elem 
-	div 46 6, elem 'a' "anatomia"
-podem ser usadas em modo infixo englobando-as em ``
-	46 `div` 6, 'a' `elem` "anatomia"
+Funções Prefixas(operador aparece "antes dos operandos") div, mod, elem 
+    div 46 6, elem 'a' "anatomia"
+    Podem ser usadas em modo infixo englobando-as em ``
+    46 `div` 6, 'a' `elem` "anatomia"
 
 
 
@@ -144,11 +157,14 @@ getLine
 	batatas
 	"batatas"
 
-read "12"::Int 
+read "12"::Int
 
 brak c l
 	equivalente à função span invocada com a condição negada
 
+       ^
+FIXME  |
+--
 span c l
 	span é a mesma coisa que (takeWhile c l, dropWhile c l)
 	span (<3) [1..10]
