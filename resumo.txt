@@ -3,12 +3,14 @@ Módulos úteis:
     Data.Char 
     Data.List
 
+
 Métodos de ordenação de listas:
 	Insertion Sort 
 		Insere recursivamente um elemento no seu respetivo lugar na lista
 
 	Minimum Sort
-		Pega no menor elemento da lista recursivamente e adiciona o a uma lista sem esse elemento recursivamente
+		Pega no menor elemento da lista recursivamente e adiciona 
+                o a uma lista sem esse elemento recursivamente
 
 	Merg Sort
 		Divide a lista em 2 recursivamente e no fim junta tudo ordenadamente
@@ -25,11 +27,12 @@ Métodos de ordenação de listas:
 		se fosse um jogo de cartas seria o peixinho, uma merda
 
 Lazy evaluation
-    O haskell utiliza uma estratégia de redução, 
-    que aplica a função antes de fazer os calculos dos seus argumentos, 
-    é o que permite ao haskell lidar com listas infinitas
+	O haskell utiliza uma estratégia de redução, 
+    	que aplica a função antes de fazer os calculos dos seus argumentos, 
+    	é o que permite ao haskell lidar com listas infinitas
         snd (div 5 0, 1) = 1
-        zip "abvdefg" [1..] -> ele não calcula a lista infinta completa, so calcula até onde lhe dá jeito, é um preguiçoso 
+        zip "abvdefg" [1..] -> ele não calcula a lista infinta completa, so calcula até onde lhe dá jeito, 
+                               é um preguiçoso 
 
 para executar programas seguidos, comandos, IOs, usa-se o: do 
 FIXME
@@ -37,25 +40,30 @@ Classes e instâncias
 
 
 Árvores
-    Árvores de procura:
-        São árvores que partindo de um nodo, qualquer que ele seja, o nodo do ramo da esquerda é sempre menor que este 
+
+Árvores de procura:
+        São árvores que partindo de um nodo, qualquer que ele seja, 
+ 	o nodo do ramo da esquerda é sempre menor que este 
         e o da direira é sempre maior.
-    Rose Trees:
-	São árvores irregulares, árvores que são n-áveis
+Rose Trees:
+	São árvores irregulares, árvores que são n-áriais
 
         data RTree a = R a [RTree a]
-    
-    Leaf trees: 
+
+Leaf Trees:
         Árvores binárias em que a informação está apenas nas folhas da árvore.
         Os nós intermédios não têm informação.
 
         data LTree a = Tip a | Fork (LTree a) (LTree a)    
     
-    Full trees:
+Full trees:
         Árvores binárias que têm informação nos nós intermédios e nas folhas.
         A informação guardada nos nós e nas folhas pode ser de tipo diferente.
-        
+       
         data FTree a b = Leaf b | No a (FTree a b) (FTree a b)
+    
+árvodes genealogicas:
+        data Pe a = ?(Vazio) | Familia  <nome>(raiz) (Pe a) (Pea)   
 
     Existem algoritmos para equilibrar árvores binárias de procura, caso estejam desiquilibradas.
 
@@ -100,7 +108,7 @@ Funções de ordem superior:
 	Funções que aceitam outras como argumento
 
 Cronómetro
-    :set +s
+:set +s
 	inicia o cronómetro, conta o tempo de cada função executada
 
 
@@ -120,56 +128,68 @@ Construção de listas:
 	[50,45..0] = [50,45,40,35,30,25,20,15,10,5,0]
 
 Listas em compreensão
-    {x | x in N && x < 10} = {1,2,3,4,5,6,7,8,9}
-    lista em compreensao      lista em extensao 
-    exemplo 
+    	{x | x in N && x < 10} = {1,2,3,4,5,6,7,8,9}
+    	lista em compreensao      lista em extensao 
+    	exemplo 
 	[x | x <- [1..10], mod x 2 == 0 ] == [2,4,6,8,10]
 
 
 Funções Infixas (operadores "entre" os operandos) +,*,/,!!
-    4 + 5,[1,2,3] !! 2
-    podem ser usadas em Modo Prefixo, englobando-as em ()
+    	4 + 5,[1,2,3] !! 2
+    	podem ser usadas em Modo Prefixo, englobando-as em ()
 	(+) 4 5, (!!) [1,2,3] 2
 
 
 Funções Prefixas(operador aparece "antes dos operandos") div, mod, elem 
-    div 46 6, elem 'a' "anatomia"
-    Podem ser usadas em modo infixo englobando-as em ``
-    46 `div` 6, 'a' `elem` "anatomia"
+	div 46 6, elem 'a' "anatomia"
+    	Podem ser usadas em modo infixo englobando-as em ``
+    	46 `div` 6, 'a' `elem` "anatomia"
 
 
 
 
  it interpretador FIXME
 
-Funções aplicadas a listas:
+Funções aplicadas a listas e a outras coisas:
 
-flip
+
 
 spin
 
 foldr f l 
 
-foldl
+foldl f a l
+	Aplica uma função fFIXME 
 
-curry
+curry (f a b) 
+	transforma uma função f que recebe tuplos (a,b) como argumento para um função que recebe
+	e elementos separados: a b 
+        curry fst 2 3 = 2
 
-getChar tipo IO 
+uncurry (f a b) 
+	transforma uma função f que recebe elementos separados: a b para uma que recebe
+	tuplos (a,b) como argumento 
+	uncurry (*) (2,3) = 6 
+
+getChar x
+	Apanha um carater inserido pelo usuário em formato string
+	Geralmente utilizado como: x <- getChar
+
 getLine
-    tipo IO 
-	a = getLine 
-	Prelude> a
-	batatas
-	"batatas"
+	Apanha uma linha inserida pelo usuário em formato string
+        Geralmente utilizado como: x <- getLine
 
-read "12"::Int
+flip f x y
+	Troca a ordem dos argumentos da função f
+	flip (/) 1 2 = 2.0
+
+read x :: tipo
+	Converte uma string x para um tipo Num, Int,Float,Integer...
+	read "12"::Float = 12.0
 
 brak c l
 	equivalente à função span invocada com a condição negada
 
-       ^
-FIXME  |
---
 span c l
 	span é a mesma coisa que (takeWhile c l, dropWhile c l)
 	span (<3) [1..10]
@@ -304,9 +324,9 @@ inits l
 
 
 Outros:
-
-FIXME 
-signum
+ 
+signum x 
+	Devolve -1,0,1, se x for negativo, nulo, positivo, respetivamente
 
 id x
 	função identidade
