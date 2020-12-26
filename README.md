@@ -1,2 +1,4 @@
-Aqui irão ser colocados exercícios, código útil ect. 
-Feliz Natal!
+# pf
+exercícios de pf, coisas úteis. Exitem ainda coisas incompletas
+
+Feliz Natal.
