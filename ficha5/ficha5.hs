@@ -31,12 +31,11 @@ or  l = foldr (||) False l
 
 -- a
 myany :: (a -> Bool) -> [a] -> Bool
---any odd [1..10] == True
---myany c [] = False
---myany c (h:t) = c h || myany c t
-             -- if c h then True else myany c t 
-             -- not (null [ x | x <- l, c x ])
-myany c l = foldl (\a x -> (c x) || a) False l
+myany c [] = False
+myany c (h:t) = c h || myany c t
+
+myany2 c l = foldr (\x a -> a || c x) (False) l 
+
 
 -- b 
 myzipWith :: (a -> b -> c) -> [a] -> [b] -> [c]
