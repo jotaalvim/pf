@@ -102,42 +102,84 @@ data Classificacao = Aprov Int | Rep | Faltou deriving Show
 type Turma = BTree Aluno -- árvore binária de procura (ordenada por número)
 
 a :: Aluno
-a = (1,"Manel", ORD, Aprov 15)
-a2 = (4,"Manela", ORD, Rep)
+a = (1,"Manel", ORD, Aprov 17)
+a2 = (4,"Manela", ORD,Rep)
 ar = Node a2 (Node a Empty Empty) Empty
 
-inscNum :: Numero -> Turma -> Bool
-inscNum x Empty = False
-inscNum x (Node (n,_,_,_) e d ) | x == n = True
-                                | x > n  = inscNum x d
-                                | x < n  = inscNum x e
+
+-- atravessa  lista de forma inorder
+inorder :: BTree a -> [a]
+inorder Empty = []
+inorder (Node x e d) = inorder e ++ [x] ++ inorder d  
+
+-- a 
+
+inscNum  :: Numero -> Turma -> Bool
+inscNum x turma = any (==x) [ n | (n,_,_,_) <- inorder turma ]
+ 
+inscNum2  :: Numero -> Turma -> Bool
+inscNum2 x turma = foldr (\(n,_,_,_) a -> (x==n) || a ) False (inorder turma) 
+
+inscNum3 :: Numero -> Turma -> Bool
+inscNum3 x Empty = False
+inscNum3 x (Node (n,_,_,_) e d ) | x == n = True
+                                 | x > n  = inscNum3 x d
+                                 | x < n  = inscNum3 x e
+
+-- b 
 
 inscNome :: Nome -> Turma -> Bool
-inscNome x Empty = False
-inscNome x (Node (_,nome,_,_) e d ) | x == nome = True
-                                   | otherwise = inscNome x d || inscNome x e
+inscNome x turma = any (==x) [ n | (_,n,_,_) <- inorder turma ]
+ 
+inscNome2 :: Nome -> Turma -> Bool
+inscNome2 x turma = foldr (\(_,n,_,_) a -> (x==n) || a ) False (inorder turma) 
+
+inscNome3 :: Nome -> Turma -> Bool
+inscNome3 x Empty = False
+inscNome3 x (Node (_,nome,_,_) e d ) | x == nome = True
+                                     | otherwise = inscNome3 x d || inscNome3 x e
+
+-- c 
+
+trabEst :: Turma -> [(Numero,Nome)]
+trabEst turma = [ (n,nome) | (n,nome,_,_) <- inorder turma ]
 
 
-
-trabEst ::Turma -> [(Numero,Nome)]
-trabEst Empty = []
-trabEst a@(Node x e d) = (n,nome):trabEst q
+trabEst2 ::Turma -> [(Numero,Nome)]
+trabEst2 Empty = []
+trabEst2 a@(Node x e d) = (n,nome):trabEst2 q
     where ((n,nome,_,_),q) = minSmin a
+
+
+-- d
 
 --falta a nota
 --nota :: Numero -> Turma -> Maybe Classificacao
 
+-- e 
 
---conta faltas 
-cf :: Turma -> Float
+
+cf :: Turma -> Float-- cf = conta faltas
 cf Empty = 0 
 cf (Node (_,_,_,Faltou) e d) = 1 + cf e + cf d
 cf (Node r e d) = cf e + cf d  
 
-percFaltas :: Turma -> Float
-percFaltas turma = 100 *cf turma /fromIntegral (length ( trabEst turma))
+percFaltas2 :: Turma -> Float
+percFaltas2 turma = 100 *cf turma /fromIntegral (length ( trabEst2 turma))
 
--- conta notas 
+-- f
+
+mediaAprov :: Turma -> Float
+mediaAprov turma = fromIntegral notas / fromIntegral n
+    where (n,notas) = foldr (\(_,_,_,Aprov x) (z,y) -> (1+z,x+y)) (0,0) (f k)
+          k = inorder turma
+          f (h@(_,_,_,Aprov x):t) = h : f t
+          f (_:t) = f t
+          f [] = [] 
+-- ou 
+
+
+-- conta notas  (nºalunos,somadas notas)
 cn :: Turma -> (Int,Int)
 cn Empty = (0,0)
 cn (Node (_,_,_,Aprov x) e d) = (1+p+p2,x+q+q2)
@@ -147,11 +189,11 @@ cn (Node x e d) = (p+p2,q+q2)
     where (p,q) = cn e
           (p2,q2) = cn d
 
-mediaAprov :: Turma -> Float
-mediaAprov turma = 100*fromIntegral b/fromIntegral a
+mediaAprov2 :: Turma -> Float
+mediaAprov2 turma = 100*fromIntegral b/fromIntegral a
     where (a,b) = cn turma
 
-
+-- g
 --cotador de passam e avaliados
 cpc:: Turma -> (Int, Int)
 cpc Empty = (0,0)
