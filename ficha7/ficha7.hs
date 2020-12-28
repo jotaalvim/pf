@@ -67,10 +67,13 @@ mirror (R x [] ) = R x []
 mirror (R x l ) = R x (reverse (map mirror l ))
 
 
+postorder :: RTree a -> [a]
+postorder (R x []) = [x]
+postorder (R x l)  = concat(map postorder l) ++ [x]
 
 
 -- 3
-{-
+
 
 
 data BTree a = Empty | Node a (BTree a) (BTree a)
@@ -93,7 +96,7 @@ listaLT(Fork e d ) = (listaLT e) ++ (listaLT d)
 ltHeight :: LTree a -> Int
 ltHeight (Tip x) = 0
 ltHeight (Fork e d) = 1+ max (ltHeight e) (ltHeight d)
---estar melhor isto
+
 -- 4 
 
 
@@ -105,6 +108,7 @@ data FTree a b = Leaf b | No a (FTree a b) (FTree a b)
 farv = No 1 (No 4 (No 5 (Leaf 'a') (Leaf 'b')) (Leaf 'c'))
             (No 7 (Leaf 'd') (Leaf 'e'))
 
+
 splitFTree :: FTree a b -> (BTree a, LTree b)
 splitFTree (Leaf x)   = (Empty, Tip x)
 splitFTree (No x e d) = let (eb,el) = splitFTree e
@@ -112,7 +116,7 @@ splitFTree (No x e d) = let (eb,el) = splitFTree e
                         in (Node x eb db, Fork x db dl)
 
 
--}
+
 
 
 
