@@ -103,10 +103,12 @@ mydeleteBy c x (y:ys) = if c x y then ys
                         else y: mydeleteBy c x ys
 
 --mydeleteBy2 c x l 
+
 -- g
 
-mysortOn :: Ord b => (a -> b) -> [a] -> [a]
 --sortOn fst [(3,1),(1,2),(2,5)] == [(1,2),(2,5),(3,1)]
+
+mysortOn :: Ord b => (a -> b) -> [a] -> [a]
 mysortOn f [] = []
 mysortOn f (h:t) = inserte f h  (mysortOn f t)
 
@@ -138,10 +140,13 @@ conta n pol = foldr (\(c,e) a -> if e == n then 1+a else a) 0 pol
 
 
 --so temos expoentes positivos poe h? 
+-- (4,0)
+
 grau :: Polinomio -> Int
-grau [] = 0 
---grau (h:t) = max (snd h) (grau t) 
-grau pol = foldr (\(c,e) r -> max e r) 0 pol
+--grau [] = 0 
+--grau ((c,e):t) = max (e) (grau t) 
+
+grau pol = foldr (\(c,e) a -> max e a) 0 pol
 
 deriv :: Polinomio -> Polinomio
 deriv pol = map (\(c,e) -> (c* fromIntegral e, e-1)) pol
@@ -151,8 +156,8 @@ calcula x pol = foldr (\(c,e) r -> c*x^e + r) 0 pol
 --calcula x pol = sum (map (\(c,e) -> c*x^e ) pol )
 
 simp :: Polinomio -> Polinomio
-simp [] = []
---simp FIXME
+simp pol = [(c,e) | (c,e) <- pol, c/= 0]
+
 
 mult :: Monomio -> Polinomio -> Polinomio
 mult (c,e) pol = map (\(c2,e2)->(c*c2, e+e2)) pol
