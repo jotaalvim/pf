@@ -189,6 +189,10 @@ getLine
 	Apanha uma linha inserida pelo usuário em formato string
         Geralmente utilizado como: x <- getLine
 
+readFile p
+	devolve uma string de um ficheiro p ( p pode ser o path em string)
+	readFile ("Documents/uni/pf/aula.hs") = "import System.Random\nimport..."
+
 flip f x y
 	Troca a ordem dos argumentos da função f
 	flip (/) 1 2 = 2.0
