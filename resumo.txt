@@ -244,7 +244,7 @@ unwords l
 	unwords ["o","gandhi","e","fofinho"] = "o gandhi e fofinho"
 
 words l 
-	contrário da unwords
+	divide uma string l por palavras
 	words "o gandhi e fofinho" = ["o","gandhi","e","fofinho"]
 
 putStr x
@@ -252,7 +252,7 @@ putStr x
 	putStr "abcd" = abcd
 
 lines l
-	controi uma lista com com todos os elementos de uma string separando os por \n
+	pega numa string l e parte-as nas suas linhas
 	lines "o\ngandhi\ne\nmuito\nfofinho\n" = ["o","gandhi","e","muito","fofinho"]
 
 unlines l
