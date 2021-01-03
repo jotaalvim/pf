@@ -109,12 +109,18 @@ farv = No 1 (No 4 (No 5 (Leaf 'a') (Leaf 'b')) (Leaf 'c'))
             (No 7 (Leaf 'd') (Leaf 'e'))
 
 
+
+--data LTree a = Tip a | Fork (LTree a) (LTree a)
+
 splitFTree :: FTree a b -> (BTree a, LTree b)
 splitFTree (Leaf x)   = (Empty, Tip x)
-splitFTree (No x e d) = let (eb,el) = splitFTree e
-                            (db,dl) = splitFTree d
-                        in (Node x eb db, Fork x db dl)
-
+splitFTree (No x e d2) = (Node x a1 a2,Fork b1 b2)
+    where (a1,b1) = splitFTree e 
+          (a2,b2) = splitFTree d2
+          
+ 
+joinTrees :: BTree a -> LTree b -> Maybe (FTree a b)
+joinTrees (Node x e d) (Fork e' d') 
 
 
 

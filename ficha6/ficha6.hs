@@ -142,7 +142,7 @@ inscNome3 x (Node (_,nome,_,_) e d ) | x == nome = True
 -- c 
 
 trabEst :: Turma -> [(Numero,Nome)]
-trabEst turma = [ (n,nome) | (n,nome,_,_) <- inorder turma ]
+trabEst turma = [ (n,nome) | (n,nome,_,_) <- inorder turma]
 
 
 trabEst2 ::Turma -> [(Numero,Nome)]
@@ -153,9 +153,10 @@ trabEst2 a@(Node x e d) = (n,nome):trabEst2 q
 
 -- d
 
---falta a nota
---nota :: Numero -> Turma -> Maybe Classificacao
-
+nota :: Numero -> Turma -> Maybe Classificacao
+nota n turma = if null k then Nothing else Just (head k)
+    where k = [c | (nu,_,_,c) <- inorder turma, n == nu] 
+          
 -- e 
 
 
@@ -196,6 +197,7 @@ mediaAprov2 turma = 100*fromIntegral b/fromIntegral a
 -- g
 --cotador de passam e avaliados
 cpc:: Turma -> (Int, Int)
+
 cpc Empty = (0,0)
 cpc (Node (_,_,_,Aprov x) e d) = (1+p+p2,1+q+q2)
     where (p,q) = cpc e
@@ -208,7 +210,7 @@ cpc (Node x e d) = (p+p2,q+q2)
           (p2,q2) = cpc d
 
 aprovAv :: Turma -> Float
-aprovAv turma = 100*fromIntegral a/fromIntegral b
+aprovAv turma = fromIntegral a/fromIntegral b
     where (a,b) = cpc turma
 
 
