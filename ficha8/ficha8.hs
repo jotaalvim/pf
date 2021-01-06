@@ -2,6 +2,7 @@ data Frac = F Integer Integer
 
 f = F (-33) (-51)
 f2 = F 50 (-5)
+
 normaliza :: Frac -> Frac
 normaliza (F n d) = F (k * (div n' m )) (div d' m)
     where k = signum n * signum d
@@ -27,11 +28,11 @@ instance Ord Frac where
 
 instance Show Frac where
     --show :: Frac -> Sring
-    show (F a b) = '(':show a++"/"++show b ++")" 
+    show (F a b) = '(':show a++"/"++show b ++")"
 
 
 instance Num Frac where 
-    (F a b) + (F c d) =normaliza( F (a*d + c*d) (d*b))
+    (F a b) + (F c d) = normaliza( F (a*d + c*d) (d*b))
     (F a b) * (F c d) = F (a*c) (b*d)
     negate (F a b) = F (-a) b
     abs (F a b) = F (abs a) (abs b)
@@ -51,9 +52,9 @@ sd f l = filter (> 2*f) l
 data Exp a =
      Const a
     |Simetrico (Exp a)
-    |Mais (Exp a) (Exp a)
+    |Mais  (Exp a) (Exp a)
     |Menos (Exp a) (Exp a)
-    |Mult (Exp a) (Exp a)
+    |Mult  (Exp a) (Exp a)
 
 
 
@@ -75,7 +76,7 @@ calcula (Mais e1 e2) = (calcula e1)+ (calcula e2)
 calcula (Menos e1 e2) = (calcula e1) - (calcula e2)
 calcula (Mult e1 e2) =(calcula e1) * (calcula e2) 
 
-
+{-
 instance (Eq a,Num a) => Eq (Exp a) where
     a == b = calcula a == calcula b
 
@@ -92,5 +93,5 @@ instance Num (Exp a) where
 --negate, abs, signum :: a -> a
 --fromInteger :: Integer -> a
 
-
+-}
 

@@ -212,6 +212,8 @@ myisSubsequenceOf (a:b) (c:d)
 --p19 :: Eq a => a -> [a] -> [Int]
 --p19 x l = [ x | x <- l, x == ( head l)]
 
+
+
 myelemIndices :: Eq a => a -> [a] -> [Int]
 myelemIndices x l = elaux 0 x l
 
@@ -595,38 +597,3 @@ contador (h:t) = contador t
 
 
 
-{-
-  a → b  = ¬b → ¬a
-
-  a → b  = ¬a ||  b
-
-¬(a → b) =  a && ¬b 
-
-  a || b  = ¬b → a 
- 
-
-E: pertence,usa-se elementos
-c: está contido,usa-se conjuntos
-∅ = {}
-
- ∅ c {∅}   Verdaderio
- ∅ E {∅}   Verdadeiro
-
- ∅  E  ∅   Falso
- ∅  c  ∅   (depende se o c tem = ) Falso
-
- ∅  c {1,     2} Verdadeiro
- ∅  E {1,     2} Falso
-{∅} c {1,     2} Falso
-{∅} c {1, ∅,  2} Verdadeiro
-{∅} E {1,{∅}, 2} Verdadeiro
-
-
-
- ∅  E {1,2,3} Falso 
-{2} c {2}   depende do (c=) Verdadeiro
-{2} c { {2} } Falso
-{2} E {{2}} Verdadeiro
-
-
--}
