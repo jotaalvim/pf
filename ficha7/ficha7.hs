@@ -118,13 +118,23 @@ splitFTree (No x e d2) = (Node x a1 a2,Fork b1 b2)
     where (a1,b1) = splitFTree e 
           (a2,b2) = splitFTree d2
           
- ------ FIXMEEEEE
- 
+
+--data BTree a = Empty  | Node a (BTree a) (BTree a)
+--data LTree a =  Tip a | Fork (LTree a) (LTree a)
+--data FTree a b = Leaf b | No a (FTree a b) (FTree a b)
+
 joinTrees :: BTree a -> LTree b -> Maybe (FTree a b)
-joinTrees Empty (Tip a) = a
-joinTrees (Node x e d) (Fork e' d') = Just (Node x (joinTrees e e') (joinTrees d d'))
+joinTrees Empty (Tip a)        = Just (Leaf a)
+joinTrees Empty (Fork e d)     = Nothing
+joinTrees (Node x e d) (Tip a) = Nothing
 
+joinTrees (Node x e d) (Fork e' d') = aux (ef,df)
 
+    where ef = (joinTrees e e')
+          df = (joinTrees d d')
+          
+          aux (Just a, Just b) = Just (No x a b)
+          aux _ = Nothing
 
 
 
