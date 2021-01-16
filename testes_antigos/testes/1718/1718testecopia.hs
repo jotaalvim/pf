@@ -96,6 +96,8 @@ conta :: Imagem -> Int
 conta (Quadrado x) = 1
 conta (Mover _ i ) = conta i
 conta (Juntar l  ) = map conta l  
+
+
 {-
 
 --inorder :: Imagem -> [Imagem]

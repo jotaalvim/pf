@@ -1,5 +1,19 @@
 import System.Random
 
+myelemIndices :: Eq a => a-> [a] -> [Int]
+myelemIndices x l = auxe 0 x l 
+
+auxe :: Eq a => Int -> a -> [a] -> [Int]
+auxe c x [] = []
+auxe c x (h:t) = if x == h then c : (auxe (c+1) x t)
+                 else (auxe (c+1) x t)
+
+
+myisSubsequenceOf :: Eq a => [a] -> [a] -> Bool
+myisSubsequenceOf [] l = True
+myisSubsequenceOf l [] = False
+myisSubsequenceOf 
+
 
 
 -- 2

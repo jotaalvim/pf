@@ -34,7 +34,7 @@ semUltimo (Fim Nil a) = Nil
 semUltimo (Fim b  a  ) = b
 semUltimo (Inicio a x) = Inicio a (semUltimo x) 
 
--- 3
+-- 3	
 
 arv = Node 3 (Node 1 Empty Empty) (Node 5 Empty Empty)
 data BTree a = Empty | Node a (BTree a) (BTree a) deriving (Show)
@@ -62,15 +62,11 @@ tab = ["..R.",
 
 posicoes :: Tabuleiro -> [(Int,Int)] 
 
-posicoes tab = [ (x,y) | x <- [0..n], y <- [0..n], retira (x,y) tab  == 'R']
+posicoes tab = [(x,y) | x <- [0..n], y <- [0..n], retira (x,y) tab  == 'R']
     where n = length tab -1
 
 retira :: (Int,Int) -> Tabuleiro -> Char
 retira (x,y) tab = tab !! y !! x
-
-
-
-
 
 
 
@@ -82,19 +78,18 @@ retira (x,y) tab = tab !! y !! x
 th tab =  all (== True) [ (length (filter (=='R') x)) == 1 | x <- tab ]
 
 transposta :: Tabuleiro -> Tabuleiro
-transposta tab = [ map (!! k ) tab | k <- [0..length tab-1] ]
+transposta tab = [ map (!! k )  tab | k <- [0..length tab-1] ]
 
 tv tab = all (== True) [ (length (filter (=='R') x)) == 1 | x <- (transposta tab) ]
 
 
 
---tv l = if length [ x | x <- (map head l), x =='R'] == 1 then True else False
 
---th :: Tabuleiro -> Bool
---th l = [[ x | x <- li, x == 'R' ]  | li <- l]
+-- devolve as diagonais
 
 
-
+dd n = [[(x,y) | x <- [0..n-1], y <- [0..n-1] , x-y == k ]| k <-[-n+2..n-2]]
+dc n = [[(x,y) | x <- [0..n-1], y <- [0..n-1] , x+y == k ]| k <-[1.. 2*n-3]]
 
 
 
