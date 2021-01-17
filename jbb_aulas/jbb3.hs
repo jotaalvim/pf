@@ -48,14 +48,37 @@ y = Node 3 Empty Empty
 dialogo :: IO ()
 dialogo = do putStr "Nome? "
              x <- getLine
-             putStr( "boa tarde " ++ x ++ "\n")
+             putStrLn( "boa tarde " ++ x)
 
 
 
 
 randomList :: Int -> (Int,Int) -> IO [Int]
+--        n elementos (x,y)ambito dos elementos
 randomList 0 (i,s) = return [] 
 randomList n (i,s) = do x  <- randomRIO (i,s)
                         xs <- randomList (n-1) (i,s)
                         return (x:xs)
- 
+
+
+insereASorte :: a -> [a] -> IO [a]
+insereASorte x [] = return [x]
+insereASorte x l  =  do p <- randomRIO(0,length l-1) -- indice de a sorte
+                        let (a,b) =  splitAt p l
+                        return (a++(x:b)) 
+
+      
+permutacao :: [a] -> IO [a]
+permutacao [] = return []
+permutacao (h:t)=  do x <- permutacao t 
+                      insereASorte h x
+
+
+wordCount :: String -> IO (Int,Int, Int)
+wordCount nome = do conteudo <- readFile nome
+                    let linhas     = length (lines conteudo)
+                        palavras   = length (words conteudo)
+                        caracteres = length conteudo
+                    return (linhas,palavras,caracteres)
+
+

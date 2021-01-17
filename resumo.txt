@@ -65,9 +65,19 @@ Full trees:
 árvodes genealogicas:
         data Pe a = ?(Vazio) | Familia  <nome>(raiz) (Pe a) (Pea)   
 
-    Existem algoritmos para equilibrar árvores binárias de procura, caso estejam desiquilibradas.
+Existem algoritmos para equilibrar árvores binárias de procura, caso estejam desiquilibradas.
 
+Travessia de árvores:
+	inorder   : primeiro visito a arvore esquerda, depois a raiz e depois o direita
 
+		exemplo de uma travessia inorder que devolve todos os valores por que passa numa lista
+		inorder :: BTree a -> [a]
+		inorder Empty = []
+		inorder (Node x e d) = inorder e ++ [x] ++ inorder d
+
+	preorder  : primeiro visito a raiz,depois a arvores esquerda e depois a direita
+	postorder : primeiro visito a arvore esquerda depoisa direita e depois a raiz
+    
 Assinatura de uma função:
 função :: Ord a =>
 função :: Eq a => ...
@@ -152,7 +162,7 @@ Funções Prefixas(operador aparece "antes dos operandos") div, mod, elem
 
 Funções aplicadas a listas e a outras coisas:
 
-
+lookup
 
 spin
 
@@ -178,6 +188,10 @@ getChar x
 getLine
 	Apanha uma linha inserida pelo usuário em formato string
         Geralmente utilizado como: x <- getLine
+
+readFile p
+	devolve uma string de um ficheiro p ( p pode ser o path em string)
+	readFile ("Documents/uni/pf/aula.hs") = "import System.Random\nimport..."
 
 flip f x y
 	Troca a ordem dos argumentos da função f
@@ -230,7 +244,7 @@ unwords l
 	unwords ["o","gandhi","e","fofinho"] = "o gandhi e fofinho"
 
 words l 
-	contrário da unwords
+	divide uma string l por palavres
 	words "o gandhi e fofinho" = ["o","gandhi","e","fofinho"]
 
 putStr x
@@ -238,7 +252,7 @@ putStr x
 	putStr "abcd" = abcd
 
 lines l
-	controi uma lista com com todos os elementos de uma string separando os por \n
+	pega numa string l e parte-as nas suas linhas
 	lines "o\ngandhi\ne\nmuito\nfofinho\n" = ["o","gandhi","e","muito","fofinho"]
 
 unlines l
@@ -247,7 +261,7 @@ unlines l
 	unlines ["o","gandhi","e","muito","fofinho"] = "o\ngandhi\ne\nmuito\nfofinho\n" 
 
 splitAt x l
-	divide a lista num tuplo x elementos (aproximadamente) cada um 
+	divide a lista em dois(num tuplo) no índice x
 	splitAt 5 [1,2,3,4,5,6,7,8,9,10] = ([1,2,3,4,5],[6,7,8,9,10]) 
 
 all c l
@@ -269,6 +283,19 @@ filter (x) l
 sum l 
 	soma todos os valores de uma lista l
 	sim [1,2,3,4] == 1
+
+group l
+	divide todos os elementos agrupando os elementos iguais numa lista
+        group "asdsaaa" = ["a","s","d","s","aaa"]
+
+
+nub l
+	remove de uma lista elementos duplicados
+	nub "banana" = "ban"         
+
+sortOn x l
+	ordena uma lista l pelo x componente de um tuplo
+	sortOn fst [(2,3),(82,2),(0,99)] = [(0,99),(2,3),(82,2)]
 
 delete x l 
 	retira a primeira ocorrência um elemento x de uma lista l
