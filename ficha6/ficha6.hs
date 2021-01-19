@@ -38,10 +38,10 @@ zipWithBT f Empty Empty = Empty
 t = (Node (1,2,3) (Node (10,20,30) Empty Empty) (Node (100,200,300) Empty Empty))
 
 unzipBT :: BTree (a,b,c) -> (BTree a,BTree b,BTree c)
+unzipBT Empty =(Empty,Empty,Empty) 
 unzipBT (Node (a,b,c) e d) = (Node a e1 d1 ,Node b e2 d2,Node c e3 d3)
     where (e1,e2,e3) = unzipBT e
           (d1,d2,d3) = unzipBT d
-unzipBT Empty =(Empty,Empty,Empty) 
 
 -- 2
 

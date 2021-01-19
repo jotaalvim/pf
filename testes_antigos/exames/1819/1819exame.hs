@@ -1,5 +1,23 @@
 import Data.List 
 
+
+t = [Just 3, Just 5, Just 89, Nothing, Just 100] 
+
+maximumMB :: (Ord a) => [Maybe a] -> Maybe a
+maximumMB l = Just $ maximum (aux l) 
+    where aux [] = []
+          aux ((Just x):t) = x : aux t
+          aux (Nothing:t)  =     aux t 
+
+
+
+
+
+
+
+
+
+
 type RelP a = [(a , a)]
 type RelL a = [( a , [a] )]
 type RelF a = ([a] ,a -> [a] )
