@@ -82,10 +82,13 @@ consulta :: [Contacto] -> ([Integer],[String])
 consulta [] = ([],[])
 consulta (Email x:t) = (p,x:q)
     where (p,q) = consulta t
+
 consulta (Tlm x:t) = (x:p,q)
     where (p,q) = consulta t
+
 consulta (Casa x:t) = (x:p,q)
     where (p,q) = consulta t
+
 consulta (Trab x:t) = (x:p,q)
     where (p,q) = consulta t
 

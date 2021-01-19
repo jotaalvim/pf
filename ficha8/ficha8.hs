@@ -6,9 +6,7 @@ f2 = F 50 (-5)
 normaliza :: Frac -> Frac
 normaliza (F n d) = F (k * (div n' m )) (div d' m)
     where k = signum n * signum d
-
           m = mdc n' d'
-    
           n' = abs n
           d' = abs d
 

@@ -62,18 +62,21 @@ temNil Nil = True
 
 
 dropSeq :: Int -> Seq a -> Seq a
-dropSeq 0 s = s
-dropSeq n Nil = Nil
-dropSeq n (Cons x s) = dropSeq (n-1) s
-dropSeq n (App e  d) = 
+dropSeq n a = a'
+    where (n',a') = daux n a 
 
 daux :: Int -> Seq a -> (Int, Seq a) 
-daux 0 s = (0,s)
-daux n (Nil)      = (n,Nil)
+daux 0 s     = (0,  s)
+daux n (Nil) = (n,Nil)
 daux n (Cons x s) = daux (n-1) s
 duax n (App e d)  = if ne == 0 then (0,App se d)
                     else daux (n-ne) d
     where (ne,se) = daux n e
+
+instance (Show a) => Show (Seq a) where
+    show (Nil) = ""
+    show (Cons x s) = "<<" ++ show x ++ "," ++ show s ++ ">>"
+    show (App e d ) = 
 
 -- 5    
 type Mat a = [[a]]
@@ -87,6 +90,7 @@ getElem :: Mat a -> IO a
 getElem l = do cs <- randomRIO (0,length (head l) -1)
                hs <- randomRIO (0,length l -1)
                return (l !! cs !! hs)
+
 
 
 -- th :: Mat a -> Bool

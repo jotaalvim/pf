@@ -1,6 +1,17 @@
 import Data.List 
 
 
+-- 1 
+myisSorted :: (Ord a) => [a] -> Bool
+myisSorted []  = True
+myisSorted [a] = True
+myisSorted (h:h2:t) = if h <= h2 then myisSorted (h2:t)
+                    else False 
+myinits :: [a] -> [[a]]
+myinits [] = [[]]
+myinits l = (myinits i)++[l]
+    where i = init l
+
 t = [Just 3, Just 5, Just 89, Nothing, Just 100] 
 
 maximumMB :: (Ord a) => [Maybe a] -> Maybe a
@@ -41,17 +52,15 @@ convLP :: RelL a -> RelP a
 convLP l = concat (map junta l)
     where junta (x,xs) = map (\y->(x,y)) xs
 
-{-
+
 convPL :: (Eq a) => RelP a -> RelL a
 convPL [] = []
-convPl l@((x,y):t) = (x,y:fil): convPl s
-    where (fil,s) = filtra x t
+convPL l@((x,y):t) = (x, listn x l): convPL (drop c l)
+    where lisfil x l = filter (\(z,y) -> z == x) l
+          listn m l  = [ y | (x,y) <- lisfil m l]
+          c = length $ listn x l 
 
-filtra ::(Eq a) => a -> Ralp a -> ([a], Ralp a)
-filtra x [] = ([],[])
-filtra x ((y,z):t) = if x == y then (z:p,q) else (p,(y,z):q)
-    where (p,q) = filtra x t
--}
+
 
 criaRelPint :: Int -> IO (RelP Int)
 criaRelPint 0 = return []

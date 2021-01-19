@@ -49,13 +49,25 @@ amplitude [] = 0--       min  max l
 amplitude l@(h:t) = m2 - m1
     where (m1,m2) = ampaux h h l
 
+
+{-
+amplitude l = m - mi
+    where m  = maximum l
+          mi = minimum l 
+-}
+
+
 -- devolve o min e o max da lista
 ampaux :: Int -> Int -> [Int] -> (Int, Int)
 ampaux m1 m2 [] = (m1, m2)
 ampaux m1 m2 (h:t) = ampaux (min m1 h ) (max m2 h) t
 
 
+
+
+
 -- dado uma lista ordenada 
+
 parte :: [Int] -> ([Int],[Int])
 parte l  = splitAt (i+1) listo
     where listo = (sort l)
@@ -73,7 +85,7 @@ sub l = [ ((b-a),i) |(a,b,i) <- zip3 l (tail l) [0..]]
 data Imagem = Quadrado Int
             | Mover (Int,Int) Imagem
             | Juntar [Imagem]
-            deriving (Show)
+
 
 ex :: Imagem
 ex = Mover (5,5) (Juntar [Mover (0,1) (Quadrado 5),Quadrado 4, Mover (4,3) (Quadrado 2)])
@@ -87,11 +99,18 @@ conta (Juntar l  ) = sum $ map conta l
 
 
 
+--inorder :: Imagem -> [Imagem]
+--inorder ( (Quadrado ):t)
+
 apaga :: Imagem -> IO Imagem
-apaga i = do
+
+apaga i = do 
     let k = conta i            
     x <- randomRIO (1,k)
-    return $ snd $ apagaux x i 
+    return snd (apagaux x i)        
+
+
+
 
 apagaux :: Int -> Imagem -> (Int,Imagem)
 apagaux 1 (Quadrado _ ) = (0,Juntar [])
