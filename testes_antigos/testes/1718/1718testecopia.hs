@@ -85,7 +85,7 @@ sub l = [ ((b-a),i) |(a,b,i) <- zip3 l (tail l) [0..]]
 data Imagem = Quadrado Int
             | Mover (Int,Int) Imagem
             | Juntar [Imagem]
-
+            deriving (Show)
 
 ex :: Imagem
 ex = Mover (5,5) (Juntar [Mover (0,1) (Quadrado 5),Quadrado 4, Mover (4,3) (Quadrado 2)])
@@ -95,21 +95,34 @@ ex = Mover (5,5) (Juntar [Mover (0,1) (Quadrado 5),Quadrado 4, Mover (4,3) (Quad
 conta :: Imagem -> Int
 conta (Quadrado x) = 1
 conta (Mover _ i ) = conta i
-conta (Juntar l  ) = map conta l  
+conta (Juntar l  ) = sum $ map conta l  
 
 
-{-
-
---inorder :: Imagem -> [Imagem]
---inorder ( (Quadrado ):t)
 
 apaga :: Imagem -> IO Imagem
-apaga Quadrado x = Juntar []
-apaga Mover cord im = Mover cord (apago im )
-apaga Juntar l = 
-apaga i = do let k = conta i in 
-                 x <- randomRIO (0,k)
+apaga i = do
+    let k = conta i            
+    x <- randomRIO (1,k)
+    return $ snd $ apagaux x i 
 
--}
+apagaux :: Int -> Imagem -> (Int,Imagem)
+apagaux 1 (Quadrado _ ) = (0,Juntar [])
+apagaux x (Quadrado v ) = (x-1, Quadrado v )
 
-             
+apagaux x (Mover  v i ) = (n, Mover v rq)
+    where (n,rq) = apagaux x i
+
+
+apagaux x (Juntar l ) = ( c, Juntar im)
+    where (c,im) = apagaux2 x l
+          apagaux2 0 l      = (0,l) 
+          apagaux2 n (x:xs) =(c2 , ima: imat )
+              where (c,ima) = apagaux n x 
+                    (c2,imat) = apagaux2 c xs
+
+
+
+
+
+
+
