@@ -38,7 +38,7 @@ elems2 l = concat [  [x..y]  | (x,y) <- l]
 {--geraconj [1,2,3,4,7,8,19,21,22,23] = [(1,4),(7,8),(19,19),(21,23)].-}
 
 
-
+{-
 geraconj :: [Int] -> ConjInt
 geraconj [] = []
 geraconj l@(h:t)  = (h,m) : geraconj (drop (m-h) l) 
@@ -48,6 +48,32 @@ aux :: Int -> Int -> [Int] -> (Int,Int)
 aux h m [] = (h,m)
 aux h m (h2:t) = if h2 - m == 1 then aux h h2 t 
                  else (h,m) 
+-}
+--[1,1,1,1] -> [(1,1)]
+--[1,2,3,4,7,8,19,21,22,23]
+--[1,2,3,4]
+-- (1,4) :    f [7,8,19,21,22,23]
+
+
+geraconj :: [Int] -> ConjInt
+geraconj [] = [] 
+geraconj l  =  par: geraconj (drop (length pseq) l)
+    where pseq = gaux l
+          par  = pu pseq 
+
+pu:: [Int] -> (Int, Int)
+pu [x]   = (x, x)
+pu (h:t) = (h, last t)
+
+gaux :: [Int] -> [Int]
+gaux []    = [] 
+gaux [a]   = [a]
+gaux (h:h2:t) = if h2-h <= 1 then h : gaux (h2:t)
+                else [h]
+
+
+
+
 
 
 data Contacto = Casa Integer

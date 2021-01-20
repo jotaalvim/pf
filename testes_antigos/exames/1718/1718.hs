@@ -46,7 +46,7 @@ tira x y m = m !! y !! x
 
 triSup2 :: Eq a => Num a => Mat a -> Bool
 triSup2 m = null [ "batatas" | x <- [0..n-1], y <- [0..n-1], x-y < 0 , tira x y m /= 0] 
-
+        where n = length $ head m 
 
 -- 4 
 
@@ -56,6 +56,8 @@ mov ('S':t) = Sul  :mov t
 mov ('N':t) = Norte:mov t 
 mov ('O':t) = Oeste:mov t 
 mov ('E':t) = Este :mov t 
+
+
 
 
 movimenta :: IO (Int,Int)
@@ -75,6 +77,26 @@ ques = do
     else return []
 
 
+
+
+
+pede :: IO [Int]
+pede = do 
+    putStrLn "dame um número"
+    x  <- getChar
+    --xs <- pede
+    if x == '0' then return []
+    else do
+        xs <- pede
+        return (read [x]:xs) 
+
+
+
+
+
+
+
+
 -- 6 
 
 data Imagem = Quadrado Int
@@ -86,4 +108,17 @@ ex = Mover (5,5) (Juntar [Mover (0,1) (Quadrado 5),Quadrado 4,Mover (4,3) (Quadr
 vazia :: Imagem -> Bool
 vazia i = conta i == 0
 
-cont 
+conta :: Imagem -> Int
+conta (Mover v i) = conta i
+conta (Quadrado x ) = 1
+conta (Juntar l) = sum $ map conta l 
+{-
+maior :: Imagem -> Maybe Int
+maior i 
+    | conta i == 0 = Nothing
+    | otherwise = Just $ maximum $ pv i 
+-}
+
+
+
+

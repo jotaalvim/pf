@@ -62,10 +62,10 @@ data Exp a =
 
 infixa :: Show a => Exp a -> String
 infixa (Const x) = show x
-infixa (Simetrico e) = "- ( "++((infixa e))++" )"
-infixa (Mais e1 e2) = '(':' ':(infixa e1)++" + "++ (infixa e2)++" )"
-infixa (Menos e1 e2) = '(':' ':(infixa e1)++" - "++ (infixa e2)++" )"
-infixa (Mult e1 e2) = '(':' ':(infixa e1)++" * "++ (infixa e2)++" )"
+infixa (Simetrico e) = "-("++(infixa e) ++" ) "
+infixa (Mais e1 e2)  = "( "++(infixa e1)++" + "++ (infixa e2)++" )"
+infixa (Menos e1 e2) = "( "++(infixa e1)++" - "++ (infixa e2)++" )"
+infixa (Mult e1 e2)  = "( "++(infixa e1)++" * "++ (infixa e2)++" )"
 
 instance Show a => Show (Exp a) where
     show = infixa 
