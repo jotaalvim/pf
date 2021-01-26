@@ -118,17 +118,16 @@ fich2 (Dir x l) = concat rf
     where rf = [  fich f | f <- l ]
 
   --  [[abc,pf,readem],[teste],[exemplo]] -> [abc,pf,read,tes,exe]
-
 -- b
 
 dirFiles :: FileSystem -> [Nome] -> Maybe [Nome]
-
 dirFiles f [] = Nothing
+dirFiles (File n) (h:t) = Nothing
+
 dirFiles (Dir x l) [z] = if x == z 
-                         then Just (fich (Dir x l))
+                         then Just (fi3 l)
                          else Nothing
 
-dirFiles (File n) (h:t) = Nothing
 dirFiles (Dir x l)(h:t) = if x /= h 
                           then Nothing
                           else Just $ concat (aux rf)
@@ -141,6 +140,13 @@ aux [] = []
 aux (Nothing :t) = aux t
 aux ((Just x):t) = x: aux t
 
+
+
+
+fi3 :: [FileSystem] -> [Nome] 
+fi3 [] = [] 
+fi3  ((Dir x l):t) = fi3 t
+fi3 ((File nome):t) = nome: fi3 t
 --------------------------------
 
 listaFich :: FileSystem ->  IO ()
