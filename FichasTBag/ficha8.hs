@@ -101,9 +101,12 @@ ordenaData (x:xs)
  where getData :: (Data, String, Movimento) -> Data
        getData (d,s,m) = d
 
+mostraExtrato :: Extracto -> String
+mostraExtrato (Ext sa []) = ""
+mostraExtrato (Ext sa ((d, s, Debito x):t)) = show d ++ "   " ++ s ++ "                " ++ show x ++ "\n" ++ mostraExtrato (Ext sa t)
+mostraExtrato (Ext sa ((d, s, Credito x):t)) = show d ++ "   " ++ s ++ "      " ++ show x ++ "\n" ++ mostraExtrato (Ext sa t)
+mostraExtrato (Ext sa [(d, s, Credito x)]) = show d ++ "   " ++ s ++ "      " ++ show x ++ "\n"
+mostraExtrato (Ext sa [(d, s, Debito x)]) = show d ++ "   " ++ s ++ "                " ++ show x ++ "\n" 
+
 instance Show Extracto where
-    show (Ext s []) = "Saldo anterior: " ++ show s ++ "\n" ++ "---------------------------------------\nData Descricao Credito Debito\n---------------------------------------" 
-    show (Ext sa ((d, s, Debito x):t)) = show d ++ "  " ++ s ++ "            " ++ show x ++ "\n" ++ show (Ext (saldo (Ext sa [(d, s, Debito x)])) t)
-    show (Ext sa ((d, s, Credito x):t)) = show d ++ "  " ++ s ++ "     " ++ show x ++ "\n" ++ show (Ext (saldo (Ext sa [(d, s, Credito x)])) t)
-    show (Ext sa [(d, s, Credito x)]) = show d ++ "  " ++ s ++ "     " ++ show x ++ "\n---------------------------------------\nSaldo actual: " ++ show (saldo (Ext sa [(d, s, Credito x)]))
-    show (Ext sa [(d, s, Debito x)]) = show d ++ "  " ++ s ++ "            " ++ show x ++ "\n---------------------------------------\nSaldo actual: " ++ show (saldo (Ext sa [(d, s, Debito x)]))
+    show e@(Ext sa l) = "Saldo anterior: " ++ show sa ++ "\n---------------------------------------\nData       Descricao   Credito   Debito\n---------------------------------------\n" ++ mostraExtrato (ordena1 e) ++ "---------------------------------------\nSaldo actual: " ++ show (saldo e)
