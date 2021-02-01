@@ -10,7 +10,6 @@ normaliza (F n d) = F (k * (div n' m )) (div d' m)
           n' = abs n
           d' = abs d
 
-
 mdc :: Integer -> Integer -> Integer
 mdc a b
     | a > b = mdc (a-b) b
@@ -18,17 +17,19 @@ mdc a b
     | a==b = b
 
 
-instance Eq Frac 
-    where (F a b) == (F c d) = a*d == c*b
+
+
+instance Eq Frac where 
+    (F a b) == (F c d) = a*d == c*b
 
 instance Ord Frac where 
-    f1 <= f2 =let (F a b) = normaliza f1
-                  (F c d) = normaliza f2
-              in  a*d <= c*d
+    f1 <= f2 = let (F a b) = normaliza f1
+                   (F c d) = normaliza f2
+               in  a*d <= c*d
 
 instance Show Frac where
     --show :: Frac -> Sring
-    show (F a b) = '(':show a++"/"++show b ++")"
+    show (F a b) = "("++ show a ++"/"++show b ++")"
 
 
 instance Num Frac where 
@@ -61,10 +62,10 @@ data Exp a =
 
 infixa :: Show a => Exp a -> String
 infixa (Const x) = show x
-infixa (Simetrico e) = "- ( "++((infixa e))++" )"
-infixa (Mais e1 e2) = '(':' ':(infixa e1)++" + "++ (infixa e2)++" )"
-infixa (Menos e1 e2) = '(':' ':(infixa e1)++" - "++ (infixa e2)++" )"
-infixa (Mult e1 e2) = '(':' ':(infixa e1)++" * "++ (infixa e2)++" )"
+infixa (Simetrico e) = "-("++(infixa e) ++" ) "
+infixa (Mais e1 e2)  = "( "++(infixa e1)++" + "++ (infixa e2)++" )"
+infixa (Menos e1 e2) = "( "++(infixa e1)++" - "++ (infixa e2)++" )"
+infixa (Mult e1 e2)  = "( "++(infixa e1)++" * "++ (infixa e2)++" )"
 
 instance Show a => Show (Exp a) where
     show = infixa 

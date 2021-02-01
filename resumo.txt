@@ -162,6 +162,10 @@ Funções Prefixas(operador aparece "antes dos operandos") div, mod, elem
 
 Funções aplicadas a listas e a outras coisas:
 
+
+
+concatMap
+
 lookup
 
 spin

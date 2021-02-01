@@ -66,10 +66,13 @@ mirror :: RTree a -> RTree a
 mirror (R x [] ) = R x []
 mirror (R x l ) = R x (reverse (map mirror l ))
 
-
 postorder :: RTree a -> [a]
 postorder (R x []) = [x]
 postorder (R x l)  = concat(map postorder l) ++ [x]
+
+filhos :: RTree a -> [[a]]
+filhos (R x []) = [[x]]
+filhos (R x l ) = map (x:) (concat (map filhos l ))
 
 
 -- 3
