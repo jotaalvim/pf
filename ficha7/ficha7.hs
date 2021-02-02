@@ -70,11 +70,14 @@ postorder :: RTree a -> [a]
 postorder (R x []) = [x]
 postorder (R x l)  = concat(map postorder l) ++ [x]
 
-filhos :: RTree a -> [[a]]
-filhos (R x []) = [[x]]
-filhos (R x l ) = map (x:) (concat (map filhos l ))
+paths :: RTree a -> [[a]]
+paths (R x []) = [[x]]
+paths (R x l ) = map (x:) (concat (map paths l ))
 
-
+paths2 :: RTree a -> [[a]]
+paths2 (R x []) = [[x]]
+paths2 (R x l)  =     [ x : f    | f <- lf]
+    where lf = concat [ paths2 f | f <- l ]
 -- 3
 
 

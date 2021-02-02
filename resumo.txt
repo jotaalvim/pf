@@ -88,6 +88,21 @@ função :: Eq a => ...
 
 
 
+FIXME
+typeclass hierarchy:
+
+             Num a
+             /   \  
+            /     \ 
+           /       \
+  (Fractional a)  (Integral a)
+      /   \           /   \  
+     /     \         /     \ 
+    /       \       /       \
+ Double   Float   Integer   Int
+
+
+
 Operadores
 
 .
@@ -296,6 +311,14 @@ group l
 nub l
 	remove de uma lista elementos duplicados
 	nub "banana" = "ban"         
+
+FIXME
+on 
+compare 
+interact
+
+sort 
+sortBy
 
 sortOn x l
 	ordena uma lista l pelo x componente de um tuplo
