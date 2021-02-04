@@ -126,8 +126,10 @@ pv (Mover v i)  = pv i
 pv (Quadrado x) = [x]
 pv (Juntar l)   = concat $ map pv l
 
-
-
+instance Eq Imagem where
+    (Mover v i) == (Mover v2 i2) = v2 == v && i == i2
+    (Quadrado x) == (Quadrado x2) = x == x2
+    (Juntar l) == (Juntar l2) = l == l2
 
 
 
