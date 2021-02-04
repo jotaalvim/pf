@@ -58,6 +58,12 @@ tira n (Uniao n1 n2) = Uniao (tira n n1) (tira n n2)
 tira n (AA n1 n2) = if pertence n  Uniao (AA n1 n) (AA n n2)
 -}
 
+catM :: [Maybe [a]]-> [a]
+catM [] = []
+catM (Nothing:t) = catM t
+catM ((Just x):t) = x ++ catM t
+
+
 data RTree a = R a [RTree a]
 percorre :: [Int] -> RTree a -> Maybe [a]
 
@@ -67,10 +73,40 @@ percorre (h:t) (R a l) = a: percorre t (l !! h)
 
 
 
+-- b
+ex = R 4 [ R 5 [],
+           R 6 [R 9[]]]
+
+
+procura :: Eq a => a -> RTree a -> Maybe [a]
+procura x (R z []) = if x == z
+                     then Just [x]
+                     else Nothing
+
+procura x (R z l)  = if x == z
+                     then Just [x]
+                     else if null $ catM ac
+                          then Nothing
+                          else Just ( z: catM ac)
+    where ac = [ procura x filho| filho <- l ]
 
 
 
 
+
+
+procura2 :: Eq a => a -> RTree a -> Maybe [Int]
+procura2 x (R z []) = if x == z then 
+
+
+pa:: => Eq a => a -> RTree a ->([Int],Int,RTree a)
+pa x (R z [])
+    | x == z = ([1],1, R z []) 
+    | x /= z = ([] ,0, R z [])
+
+pa x (R z l)
+    | x == z = 
+    | x /= z = 
 
 
 

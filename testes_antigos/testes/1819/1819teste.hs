@@ -37,8 +37,9 @@ zipWithBT f (Node x e d) (Node x2 e2 d2) = Node (f x x2) (zipWithBT f e e2) (zip
 -- 3 
 
 digitAlpha :: String -> (String,String)
+digitAlpha [] = ([],[])
 digitAlpha (x:xs) | isDigit x = (x:a,b)
-                  | isAlpha x = (a,,x:b)
+                  | isAlpha x = (a,x:b)
                   where (a,b) = digitAlpha xs
 
 -- 4
@@ -61,6 +62,9 @@ temNil (App e d) = temNil e && temNil d
 temNil Nil = True  
 
 
+
+
+
 dropSeq :: Int -> Seq a -> Seq a
 dropSeq n a = a'
     where (n',a') = daux n a 
@@ -69,9 +73,12 @@ daux :: Int -> Seq a -> (Int, Seq a)
 daux 0 s     = (0,  s)
 daux n (Nil) = (n,Nil)
 daux n (Cons x s) = daux (n-1) s
-duax n (App e d)  = if ne == 0 then (0,App se d)
+daux n (App e d)  = if ne == 0 then (0,App se d)
                     else daux (n-ne) d
     where (ne,se) = daux n e
+
+
+
 
 instance (Show a) => Show (Seq a) where
     show (Nil) = ""

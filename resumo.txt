@@ -68,14 +68,8 @@ Full trees:
 Existem algoritmos para equilibrar árvores binárias de procura, caso estejam desiquilibradas.
 
 Travessia de árvores:
-	inorder   : primeiro visito a arvore esquerda, depois a raiz e depois o direita
-
-		exemplo de uma travessia inorder que devolve todos os valores por que passa numa lista
-		inorder :: BTree a -> [a]
-		inorder Empty = []
-		inorder (Node x e d) = inorder e ++ [x] ++ inorder d
-
-	preorder  : primeiro visito a raiz,depois a arvores esquerda e depois a direita
+	inorder   : primeiro visito a arvore esquerda, depois a raiz  e depois o direita
+	preorder  : primeiro visito a raiz,depois a arvores esquerda  e depois a direita
 	postorder : primeiro visito a arvore esquerda depoisa direita e depois a raiz
     
 Assinatura de uma função:

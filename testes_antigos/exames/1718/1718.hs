@@ -112,12 +112,24 @@ conta :: Imagem -> Int
 conta (Mover v i) = conta i
 conta (Quadrado x ) = 1
 conta (Juntar l) = sum $ map conta l 
-{-
+
+
+
 maior :: Imagem -> Maybe Int
 maior i 
     | conta i == 0 = Nothing
     | otherwise = Just $ maximum $ pv i 
--}
+
+
+pv :: Imagem -> [Int]
+pv (Mover v i)  = pv i
+pv (Quadrado x) = [x]
+pv (Juntar l)   = concat $ map pv l
+
+
+
+
+
 
 
 
