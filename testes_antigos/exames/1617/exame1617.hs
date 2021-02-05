@@ -83,16 +83,39 @@ transposta tab = [ map (!! k )  tab | k <- [0..length tab-1] ]
 tv tab = all (== True) [ (length (filter (=='R') x)) == 1 | x <- (transposta tab) ]
 
 
-
-
 -- devolve as diagonais
-
 
 dd n = [[(x,y) | x <- [0..n-1], y <- [0..n-1] , x-y == k ]| k <-[-n+2..n-2]]
 dc n = [[(x,y) | x <- [0..n-1], y <- [0..n-1] , x+y == k ]| k <-[1.. 2*n-3]]
 
 
 
+tab2 = ["..R.",
+        "R...",
+        ".R..",
+        "...R"]
+
+
+--n linhas
+--n colunas
+--n-1 pontos
+--n rainhas
+
+bemFormado :: Int -> Tabuleiro -> Bool
+bemFormado n m = length m == n && all (==(1,n-1)) l 
+    where l = contas m
+
+
+--              tab -> [(rai,pon)]
+contas :: Tabuleiro -> [(Int,Int)]
+contas [] = []
+contas m = map (\x -> foldl aux (0,0) x ) m
+
+aux :: (Int,Int) -> Char -> (Int,Int)
+--(0,0) 'R' -> (1,0)
+aux (x,y) 'R' = (x+1,y)
+aux (x,y) '.' = (x,y+1)
+aux (x,y) r   = (x+1,y) -- caso contrario ponho num quaquer
 
 
 
