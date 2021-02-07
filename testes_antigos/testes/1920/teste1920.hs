@@ -1,28 +1,28 @@
-
+import Data.List
 
 
 {-que retorna a lista resultante de remover da primeira
 lista os elementos que não pertencem à segunda.-}
 
-intersect :: Eq a => [a] -> [a] -> [a]
-intersect [] [] = []
-intersect (h:t) l = if elem h l then h: intersect t l
-                    else intersect t l
+myintersect :: Eq a => [a] -> [a] -> [a]
+myintersect [] [] = []
+myintersect (h:t) l = if elem h l then h: myintersect t l
+                    else myintersect t l
 
-intersect2 l l2 = [ x | x <- l , elem x l2]
+myintersect2 l l2 = [ x | x <- l , elem x l2]
 
-intersect3 l l2 = filter (\x -> elem x l2 ) l
+myintersect3 l l2 = filter (\x -> elem x l2 ) l
 
 
 
-{-que calcula a lista dos sufixos de uma lista. Por exemplo, tails [1,2,3]
+{-que calcula a lista dos sufixos de uma lista. Por exemplo, mytails [1,2,3]
 corresponde a [[1,2,3],[2,3],[3],[]].-}
 
-tails :: [a] -> [[a]]
-tails [] = [[]]
-tails l  = l : tails (tail l)
+mytails :: [a] -> [[a]]
+mytails [] = [[]]
+mytails l  = l : mytails (tail l)
 
-tails2 l = [ drop x l | x <- [0..length l]] 
+mytails2 l = [ drop x l | x <- [0..length l]] 
 
 
 type ConjInt = [Intervalo]
@@ -133,6 +133,9 @@ ar = R 1 [R 2 [],
                     R 6 []]],
           R 7 []]
 
+
+
+
 paths :: RTree a -> [[a]]
 paths (R x []) = [[x]]
 paths (R x l ) = map (x:) $ concat $ map paths l
@@ -146,5 +149,33 @@ paths2 (R x l)  =     [ x : f    | f <- lf]
 
 
 
+--[[1,2],[1,3,4,5],[1,3,4,6],[1,7]]
 
+unpaths :: Eq a => [[a]] -> RTree a
+unpaths l = head $ foldl (\l l2 -> ins l2 l) [] l
+
+--[2,3,3,7] -> [2,3,7]
+--diz os nodos a adicionar
+rc ::Eq a => [[a]] -> [a]
+rc l = nub $ map head l
+
+--[1,3,4,5] -> R 1 [R 3 [R 4 [R 5 [] ]]]
+--[1,3,5,8]
+frt :: [a] -> RTree a
+frt [] = error "lista vaiza"
+frt [x] = R x [] 
+frt (h:t) = R h l 
+    where l = [ frt t ]
+
+ins :: Eq a => [a] -> [RTree a] -> [RTree a]
+ins ln [] = [frt ln ]
+ins (x:xs) a@((R z l):t)
+    
+    | null lk && null xs = a
+    | null lk   =  frt (x:xs) :a
+    | otherwise = R k (ins xs lk) : ldx 
+    
+    where (R k lk) = if null j then (R x []) else head j
+          j   = [(R z l) | (R z l) <- a, x == z]
+          ldx = [(R z l) | (R z l) <- a, x /= z]
 

@@ -230,26 +230,24 @@ linha h m2 = sum (zipWith (*) h (map head m2)):linha h (map tail m2)
 --zipWMat _ _ _ = []
 
 
-
-{-
---testa se uma matriz é triangular superior
-triSup :: Num a => Mat a -> Bool
-triSup m@(mh:mt) = all (==True) [tri ta c m | c <- [0..ta]]
-    where ta = length mh 
+triSup :: (Eq a,Num a) => Mat a -> Bool
+triSup [] = True
+triSup (l:m) = (all (==0) (map head m)) && triSup (map tail m)
 
 
-tri ta c m = if ta == 0 then True
-             else (triaux ta c (m!!c)) && tri ta (c+1) m 
-         
--- testa se uma linha é de uma m t superior
+trisup2 :: (Eq a,Num a) => Mat a -> Bool
+trisup2 m = verifica to m 
+    where to = [ (x,y) | y <- [0..length m-1 ], x <- [0..(length $ head m)-1] ,x-y < 0 ]
 
-triaux :: Num a => Int -> Int-> [a] -> Bool
-triaux ta c l = if contan l == (ta-c) then True 
-                      else False 
+verifica :: (Eq a,Num a) => [(Int,Int)] -> Mat a -> Bool
+verifica []    m = True
+verifica ((x,y):t) m = ((m !! y !! x) == 0) && verifica t m 
 
---conta numero de 0 seguidos
-contan :: [a] -> Int 
-contan (h:t) = if h == 0 then 1+contan t else 0
 
--}
+rotateLeft :: Mat a -> Mat a
+rotateLeft m = reverse $ trans m
+
+trans :: Mat a -> Mat a
+trans m = [ map (!!k) m | k <- [0.. length m -1]]
+
 
