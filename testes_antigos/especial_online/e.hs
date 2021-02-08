@@ -53,6 +53,25 @@ data Genero = Comedia | Drama | Ficcao | Accao | Animacao | Documentario derivin
 type Filmes = [ Filme ]
 
 
+-- 4
+
+
+doRealizador :: Filmes -> Realizador -> [Titulo]
+doRealizador l rea = [ t | (t,_,_,_,_) <-l , rea == t ]
+
+doActor :: Filmes -> Actor -> [Titulo]
+doActor l ator = [ t | (t,_,la,_,_) <- l, elem ator la]
+
+aux :: Filme -> (Ano,Titulo)
+aux (t,_,_,_,a) = (a,t)
+
+
+
+
+
+
+
+
 data Avaliacao = NaoVi | Pontos Int deriving (Eq,Show)
 
 type FilmesAval = [(Filme,[Avaliacao])]
