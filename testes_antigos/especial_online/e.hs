@@ -49,11 +49,11 @@ type Realizador = String
 type Actor = String
 type Ano = Int
 
-data Genero = Comedia | Drama | Ficcao | Accao | Animacao | Documentario deriving Eq
+data Genero = Comedia | Drama | Ficcao | Accao | Animacao | Documentario deriving (Eq,Show)
 type Filmes = [ Filme ]
 
 
-data Avaliacao = NaoVi | Pontos Int
+data Avaliacao = NaoVi | Pontos Int deriving (Eq,Show)
 
 type FilmesAval = [(Filme,[Avaliacao])]
 
@@ -87,19 +87,13 @@ avalia a = do
 
 
 listaPorGeneros :: FilmesAval -> [(Genero,[(Titulo,Avaliacao)])]
-listaPorGeneros l = [c,f,d,ac,an,dc]
-    where c  =  (Comedia      , [(n,mediaf av) | ((n,m,l,b,v),av) <- l , b == Comedia     ] )
-          f  =  (Ficcao       , [(n,mediaf av) | ((n,m,l,b,v),av) <- l , b == Ficcao      ] )
-          d  =  (Drama        , [(n,mediaf av) | ((n,m,l,b,v),av) <- l , b == Drama       ] )
-          ac =  (Accao        , [(n,mediaf av) | ((n,m,l,b,v),av) <- l , b == Accao       ] )
-          an =  (Animacao     , [(n,mediaf av) | ((n,m,l,b,v),av) <- l , b == Animacao    ] )
-          dc =  (Documentario , [(n,mediaf av) | ((n,m,l,b,v),av) <- l , b == Documentario] )
-
+listaPorGeneros l = [ t b | ((n,m,l,b,v),av) <- l, (snd $ t b) /= [] ]
+    where t genero = (genero , [(n,mediaf av) | ((n,m,l,b,v),av) <- l , b == genero] )
 
 mediaf :: [Avaliacao] -> Avaliacao
-mediaf l = if null $ m
+mediaf l = if null m
            then NaoVi
-           else Pontos ((sum m)/(length l))
+           else Pontos $ div (sum m) (length l)
     where m = media l
 
 media :: [Avaliacao] -> [Int]

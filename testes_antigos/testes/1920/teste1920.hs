@@ -152,30 +152,34 @@ paths2 (R x l)  =     [ x : f    | f <- lf]
 --[[1,2],[1,3,4,5],[1,3,4,6],[1,7]]
 
 unpaths :: Eq a => [[a]] -> RTree a
-unpaths l = head $ foldl (\l l2 -> ins l2 l) [] l
+unpaths l = head $ foldl (\la l2 -> ins l2 la) [] l
 
---[2,3,3,7] -> [2,3,7]
---diz os nodos a adicionar
-rc ::Eq a => [[a]] -> [a]
-rc l = nub $ map head l
 
 --[1,3,4,5] -> R 1 [R 3 [R 4 [R 5 [] ]]]
---[1,3,5,8]
 frt :: [a] -> RTree a
-frt [] = error "lista vaiza"
 frt [x] = R x [] 
 frt (h:t) = R h l 
     where l = [ frt t ]
 
 ins :: Eq a => [a] -> [RTree a] -> [RTree a]
 ins ln [] = [frt ln ]
-ins (x:xs) a@((R z l):t)
-    
-    | null lk && null xs = a
-    | null lk   =  frt (x:xs) :a
+
+ins (x:xs) as
+    | null j = (frt (x:xs)) : as 
     | otherwise = R k (ins xs lk) : ldx 
-    
     where (R k lk) = if null j then (R x []) else head j
-          j   = [(R z l) | (R z l) <- a, x == z]
-          ldx = [(R z l) | (R z l) <- a, x /= z]
+          j   = [(R z l) | (R z l) <- as, x == z]
+          ldx = [(R z l) | (R z l) <- as, x /= z]
+-------------------------------------------------
+--
+unpaths2 :: Eq a => [[a]] -> RTree a
+unpaths2 l = foldl (\la l2 -> ins2 l2 la) ari (tail l)
+    where ari = frt $ head l 
+
+ins2 :: Eq a => [a] -> RTree a -> RTree a
+ins2 [x] _    = R x []
+ins2 (x:x1:xs) (R z l) 
+    | x == z && p = R z [ if r == x1 then ins2 (x1:xs) (R r z) else (R r z) | (R r z) <- l ]
+    | otherwise   = R z (frt (x1:xs): l)
+    where p = any (\(R r _) -> r == x1) l
 

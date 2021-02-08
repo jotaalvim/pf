@@ -125,14 +125,34 @@ pv :: Imagem -> [Int]
 pv (Mover v i)  = pv i
 pv (Quadrado x) = [x]
 pv (Juntar l)   = concat $ map pv l
-
+{-
 instance Eq Imagem where
     (Mover v i) == (Mover v2 i2) = v2 == v && i == i2
     (Quadrado x) == (Quadrado x2) = x == x2
     (Juntar l) == (Juntar l2) = l == l2
+-}
+
+instance Eq Imagem where
+   x == y = aux (moverQ x) (moverQ y)
+
+aux :: Imagem -> Imagem -> Bool
+aux (Mover v i) (Mover v2 i2) = v2 == v && i == i2
+aux (Quadrado x) (Quadrado x2) = x == x2
+aux (Juntar []) (Juntar []) = True
+aux (Juntar l) (Juntar (h:t)) = h `elem` l && (Juntar (re2 l h)) == (Juntar t)
 
 
+moverQ :: Imagem -> Imagem
+moverQ (Quadrado a) = (Quadrado a)
+moverQ (Mover (a,b) (Quadrado x)) = (Mover (a,b) (Quadrado x))
+moverQ (Mover (a,b) (Juntar i)) = Juntar (map moverQ (map (Mover (a,b)) i))
+moverQ (Mover (a,b) (Mover (x,y) i)) = Mover (a+x,b+y) (moverQ i)
+moverQ (Juntar l) = Juntar (map moverQ l)
 
+re2 :: (Eq a) => [a] -> a -> [a]
+re2 [] _ = []
+re2 (x:[]) a = if x==a then [] else [x]
+re2 (x:xs) a = if x==a then xs else x:re2 xs a
 
 
 
