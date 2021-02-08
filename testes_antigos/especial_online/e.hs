@@ -48,7 +48,6 @@ type Titulo = String
 type Realizador = String
 type Actor = String
 type Ano = Int
-
 data Genero = Comedia | Drama | Ficcao | Accao | Animacao | Documentario deriving (Eq,Show)
 type Filmes = [ Filme ]
 
@@ -57,7 +56,8 @@ type Filmes = [ Filme ]
 
 
 doRealizador :: Filmes -> Realizador -> [Titulo]
-doRealizador l rea = [ t | (t,_,_,_,_) <-l , rea == t ]
+doRealizador l rea = [ t | (t,r,_,_,_) <- l , rea == r ]
+
 
 doActor :: Filmes -> Actor -> [Titulo]
 doActor l ator = [ t | (t,_,la,_,_) <- l, elem ator la]
