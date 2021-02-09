@@ -64,7 +64,7 @@ prune n (R x l) | n == 1 = (R x l)
 
 mirror :: RTree a -> RTree a
 mirror (R x [] ) = R x []
-mirror (R x l ) = R x (reverse (map mirror l ))
+mirror (R x l ) = R x (reverse $ map mirror l)
 
 postorder :: RTree a -> [a]
 postorder (R x []) = [x]
@@ -141,10 +141,4 @@ joinTrees (Node x e d) (Fork e' d') = aux (ef,df)
           
           aux (Just a, Just b) = Just (No x a b)
           aux _ = Nothing
-
-
-
-
-
-
 

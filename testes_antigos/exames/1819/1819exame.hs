@@ -83,6 +83,30 @@ convPF l = (nub ((map fst l)++(map snd l)) , fun l)
           fun l x = map snd (filter (\(y,_)-> y == x) l)
 
 -}
+data LTree a = Tip a | Fork (LTree a) (LTree a) deriving (Eq)
+
+ex :: LTree Int
+ex = Fork (Tip 4) (Fork (Fork (Tip 2) (Tip 3) ) (Tip 6) ) 
+
+listaLT :: LTree a -> [a]
+listaLT (Tip x ) = [x]
+listaLT (Fork e d) = (listaLT e) ++ (listaLT d)
+
+al :: LTree a -> [(Int,a)]
+al (Tip x) = [(0,x)]
+al (Fork e d) = map (\(a,b) -> (a+1,b) ) (re++rd)
+    where re = al e
+          rd = al d 
+
+
+im :: Show a => LTree a -> [String]
+im l = map (\(a,b) -> replicate a '.'  ++ show b) (al l)
+
+instance (Show a) => Show (LTree a) where
+    show x = unlines $ im x
+
+
+
 
 
 

@@ -2,18 +2,18 @@ import Data.List
 -- 1
 
 type MSet a = [(a,Int)]
-
---cardMSet [(’b’,4),(’a’,2),(’c’,1)] -> 7
+ex :: MSet Char
+ex =  [('b',4),('a',2),('c',1)]
 
 cardMSet :: MSet a -> Int
 cardMSet l = foldl (\a (x,y) -> a +y) 0 l
-
+--           sum $ map snd l
 -- b
-{-
+
 moda :: MSet a -> [a]
 moda [] = []
-moda l = last (sortOn snd l)
--}
+moda l = replicate b a
+    where (a,b) = last $ sortOn snd l
 
 -- converteMSet [('b',4),('a',2),('c',1)] == "bbbbaac"
 converteMSet :: MSet a -> [a]
@@ -28,7 +28,7 @@ addNcopies l@((c1,n1):t) c2 n2
     | n2 >= n1 = (c2,n2):l
     | otherwise = (c1,n1): addNcopies t c2 n2
 
-
+-- 2 
 data SReais = AA Double Double 
             | FF Double Double
             | AF Double Double 
@@ -63,7 +63,7 @@ catM [] = []
 catM (Nothing:t) = catM t
 catM ((Just x):t) = x ++ catM t
 
-
+{-
 data RTree a = R a [RTree a]
 percorre :: [Int] -> RTree a -> Maybe [a]
 
@@ -90,16 +90,16 @@ procura x (R z l)  = if x == z
                           else Just ( z: catM ac)
     where ac = [ procura x filho| filho <- l ]
 
+-}
 
 
-
-
+{-
 
 procura2 :: Eq a => a -> RTree a -> Maybe [Int]
 procura2 x (R z []) = if x == z then 
 
 
-pa:: => Eq a => a -> RTree a ->([Int],Int,RTree a)
+--pa:: => Eq a => a -> RTree a ->([Int],Int,RTree a)
 pa x (R z [])
     | x == z = ([1],1, R z []) 
     | x /= z = ([] ,0, R z [])
@@ -107,7 +107,7 @@ pa x (R z [])
 pa x (R z l)
     | x == z = 
     | x /= z = 
-
+-}
 
 
 

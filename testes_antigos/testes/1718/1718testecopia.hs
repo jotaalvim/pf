@@ -62,13 +62,11 @@ parte l  = splitAt (i+1) listo
           i = snd (last lo)
           lo = sort (sub listo)   
 
+
+
 sub :: [Int] -> [(Int,Int)]
-sub l = [ ((b-a),i) |(a,b,i) <- zip3 l (tail l) [0..]]
-
-
-
-
-
+sub l = [ (b-a,i) | (a,b,i) <- zip3 l (tail l) [0..]]
+        
 
 data Imagem = Quadrado Int
             | Mover (Int,Int) Imagem

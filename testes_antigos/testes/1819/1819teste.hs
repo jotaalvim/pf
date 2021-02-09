@@ -1,3 +1,5 @@
+import Data.List
+import Data.Char
 import System.Random
 
 myelemIndices :: Eq a => a-> [a] -> [Int]
@@ -43,7 +45,7 @@ digitAlpha (x:xs) | isDigit x = (x:a,b)
                   where (a,b) = digitAlpha xs
 
 -- 4
-
+{-
 Seq a = Nil | Cons a (Seq a) | App (Seq a) (Seq a)
 
 
@@ -73,7 +75,10 @@ daux :: Int -> Seq a -> (Int, Seq a)
 daux 0 s     = (0,  s)
 daux n (Nil) = (n,Nil)
 daux n (Cons x s) = daux (n-1) s
-daux n (App e d)  = if ne == 0 then (0,App se d)
+
+daux n (App e d)  = if ne == 0 
+                    then (0,App se d)
+                    
                     else daux (n-ne) d
     where (ne,se) = daux n e
 
@@ -83,14 +88,17 @@ daux n (App e d)  = if ne == 0 then (0,App se d)
 instance (Show a) => Show (Seq a) where
     show (Nil) = ""
     show (Cons x s) = "<<" ++ show x ++ "," ++ show s ++ ">>"
-    show (App e d ) = 
-
+    show (App e d ) =  
+-}
 -- 5    
+
 type Mat a = [[a]]
 
+mat :: Mat Int
 mat = [[1,2,3],
        [5,6,7],
        [8,9,4]]
+mat2 :: Mat Int
 mat2 = [[6,7,2], [1,5,9], [8,3,4]]
 
 getElem :: Mat a -> IO a
@@ -100,5 +108,19 @@ getElem l = do cs <- randomRIO (0,length (head l) -1)
 
 
 
--- th :: Mat a -> Bool
+
+magic :: Mat Int -> Bool
+magic [] = True
+magic m  = all (==h) t
+    where (h:t) = di (tran m) ++ di m ++ linhas m ++ linhas (tran m)
+
+di :: Mat Int -> [Int]
+di m = [sum [ m !! k !! k | k <- [0..length m -1]]]
+
+tran :: Mat Int -> Mat Int
+tran m = [ map (!!k) m | k <- [0..length m -1]]
+
+linhas :: Mat Int -> [Int]
+linhas m = map sum m 
+
 

@@ -1,3 +1,4 @@
+import Data.List
 subst :: Eq a => (a,a) -> [a] -> [a]
 subst p l = map (\x -> muda p x) l
 
@@ -106,7 +107,7 @@ avalia a = do
 
 
 listaPorGeneros :: FilmesAval -> [(Genero,[(Titulo,Avaliacao)])]
-listaPorGeneros l = [ t b | ((n,m,l,b,v),av) <- l, (snd $ t b) /= [] ]
+listaPorGeneros l = nub [ t b | ((n,m,l,b,v),av) <- l]
     where t genero = (genero , [(n,mediaf av) | ((n,m,l,b,v),av) <- l , b == genero] )
 
 mediaf :: [Avaliacao] -> Avaliacao
