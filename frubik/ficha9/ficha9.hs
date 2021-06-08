@@ -2,15 +2,19 @@ import System.Random
 
 
 bingo :: IO ()
-bingo = do { l <- geraLista 90 [0..90];
-             apresenta l }
+bingo = do
+    l <- geraLista 90 [0..90]
+    apresenta l
+
 
 geraLista  :: Int -> [Int] -> IO [Int]
 geraLista 0 _ = return []
-geraLista n l = do p <- randomRIO (0,n-1)
-                   let (l1,x:l2) = splitAt p l
-                   xs <- geraLista (n-1) (l1++l2)
-                   return (x:xs)
+geraLista n l = do 
+    p <- randomRIO (0,n-1)
+    let (l1,x:l2) = splitAt p l
+    xs <- geraLista (n-1) (l1++l2)
+    return (x:xs)
+
 
 apresenta :: [Int] -> IO()
 apresenta [] = putStrLn "FIM"
@@ -99,3 +103,14 @@ geraChave = do l <- (geraLista 50 [1..50])
                let ns = take 5 l 
                    [a,b] = take 2 le
                return (Ap ns (a,b))
+
+
+
+
+
+
+
+
+
+
+

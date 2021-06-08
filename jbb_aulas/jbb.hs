@@ -10,7 +10,8 @@ sel (a:b) x = if x == 0 then a
 pmaior :: Ord a => [a] -> Int
 pmaior [] = error "nao esta defenido"
 pmaior [a] = 0
-pmaior (a:b) = if a > (sel b p) then 0
+--pmaior (a:b) = if a > (sel b p) then 0
+pmaior (a:b) = if a > ( b !! p ) then 0
                else p + 1
     where p = pmaior b
 
@@ -41,6 +42,12 @@ pmaiorAux :: Ord a => [a] -> (a,Int)
 pmaiorAux [x] = (x,0)
 pmaiorAux (h:t) = if h > m then (h,0) else (m,p+1) 
     where (m,p) = pmaiorAux t
+
+pmenor :: Ord a => [a] -> Int 
+pmenor []    = error "não pertence ao domínio"
+pmenor [x]   = 0
+pmenor (h:t) = if h < (t !! p) then 0 else p + 1
+    where p = pmenor t
 
 -- ordena uma lista
 

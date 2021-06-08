@@ -92,6 +92,7 @@ listaLT :: LTree a -> [a]
 listaLT (Tip x ) = [x]
 listaLT (Fork e d) = (listaLT e) ++ (listaLT d)
 
+-- b
 al :: LTree a -> [(Int,a)]
 al (Tip x) = [(0,x)]
 al (Fork e d) = map (\(a,b) -> (a+1,b) ) (re++rd)

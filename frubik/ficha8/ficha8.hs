@@ -17,8 +17,6 @@ mdc a b
     | a==b = b
 
 
-
-
 instance Eq Frac where 
     (F a b) == (F c d) = a*d == c*b
 

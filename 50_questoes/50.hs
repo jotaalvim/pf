@@ -119,7 +119,7 @@ myintersperse x (a:b) = a:x: myintersperse x b
 
 -- 12
 
-
+--[1,2,2,3] -> [[1],[2,2],[3]]
 mygroup :: Eq a => [a] -> [[a]]
 mygroup [] = []
 mygroup [a] = [[a]]
@@ -128,25 +128,8 @@ mygroup (a:b)
     | otherwise = [a]: (c1:c2)
     where 
         (c1:c2) = mygroup b
-{-
---[1,2,2,3] -> [[1],[2,2],[3]]
+
  
- mygroup [1,2,2,3] = [1]:[2,2,]:[[3]] == [[1],[2,2],[3]]
- a = 1, b = [2,2,3]
- (c1:c2) = mygroup [2,2,3] = [[2,2],[3]]
- c1 = [2,2], c2 = [[3]]
-
-         mygroup [2,2,3] = 2:[2]:[[3]] == [[2,2],[3]]
-         a = 2 ,b = [2,3]
-         (c1:c2) = mygroup [2,3] =  [[2],[3]]
-          c1 = [2],c2 = [[3]]
-
-                   mygroup [2,3] = [2]:[3]:[]== [[2],[3]]
-                   a = 2 b = [3]
-                   (c1:c2) = mygroup [3] = [[3]]
-                   c1 = [3], c2 = []
--}
--- versao 2
 --versão um pouco mais eficiente eficiente do que tinha antes
 a :: Eq a => [a] -> [[a]]
 a [x] = [[x]]

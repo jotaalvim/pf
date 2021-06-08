@@ -70,6 +70,15 @@ postorder :: RTree a -> [a]
 postorder (R x []) = [x]
 postorder (R x l)  = concat(map postorder l) ++ [x]
 
+preorder :: RTree a -> [a]
+preorder (R x []) = [x]
+preorder (R x l)  = [x] ++ concat $ map preorder l
+
+inorder :: RTree a -> [a]
+inorder (R x []) = [x]
+inorder (R x l ) =  
+-- //FIXME
+
 paths :: RTree a -> [[a]]
 paths (R x []) = [[x]]
 paths (R x l ) = map (x:) (concat (map paths l ))
