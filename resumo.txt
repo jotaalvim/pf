@@ -109,7 +109,7 @@ Operadores
 	com o operador . não é necessário usar argumentos:
 	h = f . g
 	h = f $ g  -> dá erro
-
+    ( f . g ) = \x -> f(g x) 
 	f = (+1) . (*2) 
 
 $
