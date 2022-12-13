@@ -1,4 +1,2 @@
-# pf
-## Caminho para um futuro feliz
-
-apenas diversão e sabedoria
+# programação funcional
+## testes e exames
